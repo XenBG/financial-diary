@@ -1,0 +1,29 @@
+{
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[scss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "always"
+    },
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": true,
+    "editor.insertSpaces": true,
+    "prettier.enable": true,
+    "prettier.printWidth": 130,
+    "prettier.singleQuote": true,
+    "prettier.tabWidth": 4,
+    "tailwindCSS.classAttributes": ["class", "custom-styles"],
+    "vue.inlayHints.missingProps": true
+}
