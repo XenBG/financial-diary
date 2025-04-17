@@ -909,6 +909,83 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- Transactions List Section -->
+                <section
+                    class="flex w-full flex-col items-stretch rounded-lg border border-solid border-slate-300 bg-white p-4 pb-0 dark:border-zinc-600 dark:bg-zinc-800"
+                >
+                    <div class="flex items-center justify-start gap-3">
+                        <ReceiptTextIcon class="flex h-4 w-4 text-blue-600 dark:text-sky-400" />
+                        <h2 class="text-lg font-medium leading-none text-slate-900 dark:text-zinc-100">
+                            Последно добавени трансакции
+                        </h2>
+                    </div>
+                    <div class="relative flex w-full flex-col gap-4 py-4">
+                        <template v-if="transactions.length === 0">
+                            <div class="py-4 text-center text-slate-500 dark:text-zinc-400">Няма добавени трансакции.</div>
+                        </template>
+
+                        <template v-else>
+                            <div
+                                class="pointer-events-none absolute left-0 right-0 top-0 z-10 h-4 w-full bg-gradient-to-b from-white to-transparent dark:from-zinc-800"
+                            />
+
+                            <div class="-my-4 flex max-h-[400px] flex-col gap-4 overflow-y-auto py-4">
+                                <template v-for="transaction in getSortedTransactions()" :key="transaction.id">
+                                    <div
+                                        class="flex items-stretch justify-between gap-2 rounded-md border border-solid border-slate-300 bg-slate-50 p-4 dark:border-zinc-600 dark:bg-zinc-900"
+                                    >
+                                        <div class="flex w-full flex-col gap-2">
+                                            <input
+                                                v-model="transaction.description"
+                                                class="w-full border-none bg-transparent text-base font-medium text-slate-900 outline-none focus:outline-none dark:text-zinc-100"
+                                                type="text"
+                                                @change="saveData"
+                                            />
+                                            <div class="flex flex-col gap-1">
+                                                <span class="text-sm leading-tight text-slate-500 dark:text-zinc-400">
+                                                    {{ getExpenseName(transaction.expenseId) }}
+                                                </span>
+                                                <span
+                                                    class="text-sm font-semibold leading-none text-slate-500 dark:text-zinc-400"
+                                                >
+                                                    {{ formatDate(transaction.date) }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col items-end justify-between gap-2">
+                                            <div class="relative">
+                                                <input
+                                                    v-model="transaction.amount"
+                                                    class="w-24 border-none bg-transparent pr-7 text-right text-base font-semibold text-slate-900 outline-none focus:outline-none dark:text-zinc-100"
+                                                    type="number"
+                                                    min="0"
+                                                    step="0.01"
+                                                    @change="saveData"
+                                                />
+                                                <span
+                                                    class="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 select-none text-base font-normal leading-none text-slate-700 dark:text-zinc-300"
+                                                >
+                                                    {{ CURRENCY }}
+                                                </span>
+                                            </div>
+                                            <button
+                                                class="text-red-500 transition-colors duration-200 hover:text-red-700 focus:outline-none dark:text-red-400 dark:hover:text-red-300"
+                                                @click="openDeleteTransactionModal(transaction)"
+                                            >
+                                                <Trash2Icon class="h-4 w-4" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div
+                                class="pointer-events-none absolute bottom-0 left-0 right-0 z-10 h-4 w-full bg-gradient-to-t from-white to-transparent dark:from-zinc-800"
+                            />
+                        </template>
+                    </div>
+                </section>
             </div>
         </div>
 
@@ -926,7 +1003,7 @@
             showAddExpenseModal ||
             showDeleteExpenseModal ||
             showTransactionsModal ||
-            showEditTransactionModal
+            showDeleteTransactionModal
         "
         class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
         @click="closeAllModals"
@@ -1121,52 +1198,77 @@
     <!-- Transactions Modal -->
     <div
         v-if="showTransactionsModal"
-        class="fixed left-1/2 top-1/2 z-50 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-lg border border-slate-300 bg-white p-6 shadow-xl dark:border-zinc-600 dark:bg-zinc-800"
+        class="fixed left-1/2 top-1/2 z-50 flex w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 flex-col gap-4 rounded-lg border border-slate-300 bg-white p-6 shadow-xl dark:border-zinc-600 dark:bg-zinc-800"
         @click.stop
     >
-        <h3 class="mb-4 text-lg font-medium text-slate-900 dark:text-zinc-100">
+        <h3 class="text-lg font-medium text-slate-900 dark:text-zinc-100">
             Трансакции за {{ currentExpense ? currentExpense.name : '' }}
         </h3>
 
         <!-- Existing Transactions -->
-        <div v-if="currentExpense" class="mb-6 max-h-60 overflow-y-auto">
-            <div
-                v-if="getSortedExpenseTransactions(currentExpense.id).length === 0"
-                class="py-4 text-center text-slate-500 dark:text-zinc-400"
-            >
-                Няма добавени трансакции
-            </div>
-            <div
-                v-for="transaction in getSortedExpenseTransactions(currentExpense.id)"
-                :key="transaction.id"
-                class="mb-2 flex items-center justify-between rounded-md border border-slate-200 bg-slate-50 p-3 dark:border-zinc-700 dark:bg-zinc-900"
-            >
-                <div class="flex flex-col">
-                    <span class="font-medium text-slate-900 dark:text-zinc-100">{{ transaction.description }}</span>
-                    <span class="text-sm text-slate-500 dark:text-zinc-400">{{ formatDate(transaction.date) }}</span>
+        <div v-if="currentExpense" class="relative -mt-4 py-4">
+            <template v-if="getSortedExpenseTransactions(currentExpense.id).length === 0">
+                <div class="py-4 text-center text-slate-500 dark:text-zinc-400">Няма трансакции за тази категория.</div>
+            </template>
+
+            <template v-else>
+                <div
+                    class="pointer-events-none absolute left-0 right-0 top-0 z-10 h-4 w-full bg-gradient-to-b from-white to-transparent dark:from-zinc-800"
+                />
+
+                <div class="-my-4 flex max-h-[180px] flex-col gap-4 overflow-y-auto py-4">
+                    <template v-for="transaction in getSortedExpenseTransactions(currentExpense.id)" :key="transaction.id">
+                        <div
+                            class="flex items-stretch justify-between gap-2 rounded-md border border-solid border-slate-300 bg-slate-50 p-4 dark:border-zinc-600 dark:bg-zinc-900"
+                        >
+                            <div class="flex w-full flex-col gap-2">
+                                <input
+                                    v-model="transaction.description"
+                                    class="w-full border-none bg-transparent text-base font-medium text-slate-900 outline-none focus:outline-none dark:text-zinc-100"
+                                    type="text"
+                                    @change="saveData"
+                                />
+                                <div class="flex flex-col gap-1">
+                                    <span class="text-sm font-semibold leading-none text-slate-500 dark:text-zinc-400">
+                                        {{ formatDate(transaction.date) }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-end justify-between gap-2">
+                                <div class="relative">
+                                    <input
+                                        v-model="transaction.amount"
+                                        class="w-24 border-none bg-transparent pr-7 text-right text-base font-semibold text-slate-900 outline-none focus:outline-none dark:text-zinc-100"
+                                        type="number"
+                                        min="0"
+                                        step="0.01"
+                                        @change="saveData"
+                                    />
+                                    <span
+                                        class="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 select-none text-base font-normal leading-none text-slate-700 dark:text-zinc-300"
+                                    >
+                                        {{ CURRENCY }}
+                                    </span>
+                                </div>
+                                <button
+                                    class="text-red-500 transition-colors duration-200 hover:text-red-700 focus:outline-none dark:text-red-400 dark:hover:text-red-300"
+                                    @click="openDeleteTransactionModal(transaction)"
+                                >
+                                    <Trash2Icon class="h-4 w-4" />
+                                </button>
+                            </div>
+                        </div>
+                    </template>
                 </div>
-                <div class="flex items-center gap-3">
-                    <span class="font-semibold text-slate-900 dark:text-zinc-100">
-                        {{ formatCurrency(transaction.amount) }} {{ CURRENCY }}
-                    </span>
-                    <button
-                        class="text-blue-500 hover:text-blue-700 focus:outline-none dark:text-blue-400 dark:hover:text-blue-300"
-                        @click="openEditTransactionModal(transaction)"
-                    >
-                        <PencilIcon class="h-4 w-4" />
-                    </button>
-                    <button
-                        class="text-red-500 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 dark:text-red-400 dark:hover:text-red-300"
-                        @click="deleteTransaction(transaction.id)"
-                    >
-                        <Trash2Icon class="h-4 w-4" />
-                    </button>
-                </div>
-            </div>
+
+                <div
+                    class="pointer-events-none absolute bottom-0 left-0 right-0 z-10 h-4 w-full bg-gradient-to-t from-white to-transparent dark:from-zinc-800"
+                />
+            </template>
         </div>
 
         <!-- Add New Transaction Form -->
-        <div class="mb-4 rounded-md border border-slate-200 bg-slate-50 p-4 dark:border-zinc-700 dark:bg-zinc-900">
+        <div class="rounded-md border border-slate-200 bg-slate-50 p-4 dark:border-zinc-700 dark:bg-zinc-900">
             <h4 class="mb-3 font-medium text-slate-900 dark:text-zinc-100">Добавяне на нова трансакция</h4>
             <div class="mb-3">
                 <label class="mb-1 block text-sm font-medium text-slate-700 dark:text-zinc-300" for="transactionDescription">
@@ -1221,60 +1323,26 @@
         </div>
     </div>
 
-    <!-- Edit Transaction Modal -->
+    <!-- Delete Transaction Modal -->
     <div
-        v-if="showEditTransactionModal"
+        v-if="showDeleteTransactionModal"
         class="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-lg border border-slate-300 bg-white p-6 shadow-xl dark:border-zinc-600 dark:bg-zinc-800"
         @click.stop
     >
-        <h3 class="mb-4 text-lg font-medium text-slate-900 dark:text-zinc-100">Редактиране на трансакция</h3>
-        <div class="mb-4">
-            <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-zinc-300" for="editTransactionDescription">
-                Описание
-            </label>
-            <input
-                id="editTransactionDescription"
-                v-model="editTransactionDescription"
-                class="w-full rounded-md border border-slate-300 bg-white p-2 text-slate-900 focus:outline-none dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-100"
-                type="text"
-                placeholder="Въведете описание"
-            />
-        </div>
-        <div class="mb-4">
-            <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-zinc-300" for="editTransactionAmount">
-                Сума
-            </label>
-            <input
-                id="editTransactionAmount"
-                v-model="editTransactionAmount"
-                class="w-full rounded-md border border-slate-300 bg-white p-2 text-slate-900 focus:outline-none dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-100"
-                type="number"
-                min="0"
-                step="0.01"
-                placeholder="0.00"
-            />
-        </div>
-        <div class="mb-4">
-            <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-zinc-300" for="editTransactionDate">Дата</label>
-            <input
-                id="editTransactionDate"
-                v-model="editTransactionDate"
-                class="w-full rounded-md border border-slate-300 bg-white p-2 text-slate-900 focus:outline-none dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-100"
-                type="date"
-            />
-        </div>
+        <h3 class="mb-4 text-lg font-medium text-slate-900 dark:text-zinc-100">Изтриване на трансакция</h3>
+        <p class="mb-6 text-slate-700 dark:text-zinc-300">Сигурни ли сте, че искате да изтриете тази трансакция?</p>
         <div class="flex justify-end gap-2">
             <button
                 class="rounded-md border border-slate-300 bg-white px-4 py-2 text-slate-700 transition-colors duration-200 hover:bg-slate-100 focus:outline-none dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-600"
-                @click="showEditTransactionModal = false"
+                @click="showDeleteTransactionModal = false"
             >
                 Отказ
             </button>
             <button
-                class="rounded-md bg-blue-600 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-700 focus:outline-none dark:bg-blue-700 dark:hover:bg-blue-800"
-                @click="updateTransaction"
+                class="rounded-md bg-red-600 px-4 py-2 text-white transition-colors duration-200 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-red-700 dark:hover:bg-red-800"
+                @click="deleteTransaction(currentTransaction.id)"
             >
-                Запази
+                Изтрий
             </button>
         </div>
     </div>
@@ -1292,7 +1360,6 @@
         FolderOpenIcon,
         FolderPlusIcon,
         MoonIcon,
-        PencilIcon,
         ReceiptTextIcon,
         RefreshCcwIcon,
         SunIcon,
@@ -1335,7 +1402,7 @@
     const showAddExpenseModal = ref(false)
     const showDeleteExpenseModal = ref(false)
     const showTransactionsModal = ref(false)
-    const showEditTransactionModal = ref(false)
+    const showDeleteTransactionModal = ref(false)
 
     // Current selections for modals
     const currentSection = ref(null) // 'basic' or 'other'
@@ -1540,7 +1607,7 @@
         showAddExpenseModal.value = false
         showDeleteExpenseModal.value = false
         showTransactionsModal.value = false
-        showEditTransactionModal.value = false
+        showDeleteTransactionModal.value = false
 
         // Reset form values
         newCategoryName.value = false
@@ -1703,33 +1770,6 @@
         showTransactionsModal.value = true
     }
 
-    const openEditTransactionModal = (transaction) => {
-        currentTransaction.value = transaction
-        editTransactionDescription.value = transaction.description
-        editTransactionAmount.value = transaction.amount
-        editTransactionDate.value = transaction.date
-        showEditTransactionModal.value = true
-    }
-
-    const updateTransaction = () => {
-        if (!editTransactionDate.value) return
-
-        const amount = safeParseFloat(editTransactionAmount.value)
-
-        const index = transactions.value.findIndex((t) => t.id === currentTransaction.value.id)
-        if (index !== -1) {
-            transactions.value[index] = {
-                ...transactions.value[index],
-                description: editTransactionDescription.value || 'Автоматично плащане',
-                amount: amount,
-                date: editTransactionDate.value,
-            }
-
-            saveData()
-            showEditTransactionModal.value = false
-        }
-    }
-
     const addTransaction = () => {
         if (!newTransactionDate.value) return
 
@@ -1754,7 +1794,14 @@
 
     const deleteTransaction = (transactionId) => {
         transactions.value = transactions.value.filter((t) => t.id !== transactionId)
+
         saveData()
+        showDeleteTransactionModal.value = false
+    }
+
+    const openDeleteTransactionModal = (transaction) => {
+        currentTransaction.value = transaction
+        showDeleteTransactionModal.value = true
     }
 
     // Helper functions
@@ -1767,8 +1814,28 @@
         return transactions.value.filter((t) => t.expenseId === expenseId).length
     }
 
+    const getSortedTransactions = () => {
+        return [...transactions.value].sort((a, b) => new Date(b.date) - new Date(a.date))
+    }
+
     const getSortedExpenseTransactions = (expenseId) => {
         return transactions.value.filter((t) => t.expenseId === expenseId).sort((a, b) => new Date(b.date) - new Date(a.date))
+    }
+
+    const getExpenseName = (expenseId) => {
+        // Search in basic expenses
+        for (const category of basicExpenses.value) {
+            const expense = category.expenses.find((e) => e.id === expenseId)
+            if (expense) return `${category.name} - ${expense.name}`
+        }
+
+        // Search in other expenses
+        for (const category of otherExpenses.value) {
+            const expense = category.expenses.find((e) => e.id === expenseId)
+            if (expense) return `${category.name} - ${expense.name}`
+        }
+
+        return 'Неизвестен разход'
     }
 
     const getExpenseSpent = (expenseId) => {
