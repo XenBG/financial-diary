@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-    content: ['./src/**/*.{html,js,vue}'],
+    content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
     darkMode: 'class',
     theme: {
         fontFamily: {
@@ -11,4 +11,5 @@ export default {
             body: ['Sofia Sans'],
         },
     },
+    plugins: [],
 }
