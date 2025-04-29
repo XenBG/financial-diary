@@ -2,65 +2,126 @@
     <div class="h-(100%+1.5rem) -my-4 w-full xl:-my-6">
         <div class="h-full overflow-y-auto">
             <div class="flex flex-col gap-4 px-0 py-4 xl:gap-6 xl:py-6">
-                <div class="flex w-full flex-col items-start justify-center gap-4 sm:gap-6 md:gap-8">
-                    <h1 class="flex items-center justify-start gap-2">
-                        <WalletCardsIcon class="h-6 w-6 text-slate-900 dark:text-zinc-100 sm:h-7 sm:w-7" />
-                        <span
-                            class="text-left text-lg font-semibold leading-normal text-slate-900 dark:text-zinc-100 sm:text-xl md:text-2xl"
-                        >
-                            Финансов дневник
-                        </span>
-                    </h1>
+                <div class="flex w-full flex-col items-start justify-center gap-4 md:gap-6">
+                    <div class="flex flex-col items-start justify-center gap-4 md:gap-6">
+                        <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+                            <div
+                                class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 dark:border-zinc-700 dark:bg-zinc-800 dark:shadow-none"
+                            >
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-100 dark:bg-indigo-900"
+                                    >
+                                        <WalletCardsIcon class="h-5 w-5 text-indigo-600 dark:text-indigo-300" />
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-slate-900 dark:text-zinc-100">
+                                        Управление на основна разполагаемост
+                                    </h3>
+                                </div>
+                                <p class="text-base text-slate-600 dark:text-zinc-300">
+                                    Проследявайте вашите приходи и започващ баланс. Лесно добавяйте и редактирайте суми, за да
+                                    имате ясна представа за вашата финансова ситуация.
+                                </p>
+                            </div>
 
-                    <div class="flex flex-col items-start justify-center gap-4">
-                        <p
-                            class="font-base text-left text-lg leading-normal text-slate-700 dark:text-zinc-200 sm:text-xl md:text-2xl"
-                        >
-                            Възможности на приложението:
-                        </p>
-                        <ul class="flex flex-col gap-2">
-                            <li class="flex items-center gap-2">
-                                <CircleCheckIcon class="h-4 w-4 text-green-600 dark:text-green-400 sm:h-5 sm:w-5" />
-                                <span
-                                    class="font-base text-left text-base leading-normal text-slate-700 dark:text-zinc-200 sm:text-lg md:text-xl"
-                                >
-                                    Въвеждане на основна разполагаемост.
-                                </span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <CircleCheckIcon class="h-4 w-4 text-green-600 dark:text-green-400 sm:h-5 sm:w-5" />
-                                <span
-                                    class="font-base text-left text-base leading-normal text-slate-700 dark:text-zinc-200 sm:text-lg md:text-xl"
-                                >
-                                    Въвеждане на основни категории разходи.
-                                </span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <CircleCheckIcon class="h-4 w-4 text-green-600 dark:text-green-400 sm:h-5 sm:w-5" />
-                                <span
-                                    class="font-base text-left text-base leading-normal text-slate-700 dark:text-zinc-200 sm:text-lg md:text-xl"
-                                >
-                                    Въвеждане на второстепенни категории разходи.
-                                </span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <CircleCheckIcon class="h-4 w-4 text-green-600 dark:text-green-400 sm:h-5 sm:w-5" />
-                                <span
-                                    class="font-base text-left text-base leading-normal text-slate-700 dark:text-zinc-200 sm:text-lg md:text-xl"
-                                >
-                                    Управление на разходите чрез трансакции.
-                                </span>
-                            </li>
-                        </ul>
+                            <div
+                                class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 dark:border-zinc-700 dark:bg-zinc-800 dark:shadow-none"
+                            >
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900"
+                                    >
+                                        <CircleCheckIcon class="h-5 w-5 text-green-600 dark:text-green-300" />
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-slate-900 dark:text-zinc-100">
+                                        Основни категории разходи
+                                    </h3>
+                                </div>
+                                <p class="text-base text-slate-600 dark:text-zinc-300">
+                                    Създайте и управлявайте основни категории като Храна, Транспорт, Забавления и други.
+                                    Персонализирайте категориите според вашите нужди.
+                                </p>
+                            </div>
+
+                            <div
+                                class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 dark:border-zinc-700 dark:bg-zinc-800 dark:shadow-none"
+                            >
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900"
+                                    >
+                                        <ListIcon class="h-5 w-5 text-blue-600 dark:text-blue-300" />
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-slate-900 dark:text-zinc-100">Подкатегории разходи</h3>
+                                </div>
+                                <p class="text-base text-slate-600 dark:text-zinc-300">
+                                    Разделете основните категории на по-детайлни подкатегории. Например, под Храна можете да имате
+                                    Ресторанти, Хранителни магазини, Закуски и други.
+                                </p>
+                            </div>
+
+                            <div
+                                class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 dark:border-zinc-700 dark:bg-zinc-800 dark:shadow-none"
+                            >
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900"
+                                    >
+                                        <ReceiptIcon class="h-5 w-5 text-purple-600 dark:text-purple-300" />
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-slate-900 dark:text-zinc-100">
+                                        Управление на трансакции
+                                    </h3>
+                                </div>
+                                <p class="text-base text-slate-600 dark:text-zinc-300">
+                                    Добавяйте и проследявайте всички ваши разходи с детайлна информация. Виждайте история на
+                                    транзакциите, филтрирайте по категории и анализирайте вашите разходи във времето.
+                                </p>
+                            </div>
+
+                            <div
+                                class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 dark:border-zinc-700 dark:bg-zinc-800 dark:shadow-none"
+                            >
+                                <div class="flex items-center gap-3">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100 dark:bg-red-900">
+                                        <Trash2Icon class="h-5 w-5 text-red-600 dark:text-red-300" />
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-slate-900 dark:text-zinc-100">
+                                        Нулиране на трансакции
+                                    </h3>
+                                </div>
+                                <p class="text-base text-slate-600 dark:text-zinc-300">
+                                    Изтрийте всички транзакции, като запазите текущата разполагаемост и разпределението ѝ по
+                                    категории. Полезно при започване на нов период или при нужда от изчистване на историята.
+                                </p>
+                            </div>
+
+                            <div
+                                class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 dark:border-zinc-700 dark:bg-zinc-800 dark:shadow-none"
+                            >
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100 dark:bg-orange-900"
+                                    >
+                                        <MoonIcon class="h-5 w-5 text-orange-600 dark:text-orange-300" />
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-slate-900 dark:text-zinc-100">Тъмна тема</h3>
+                                </div>
+                                <p class="text-base text-slate-600 dark:text-zinc-300">
+                                    Персонализирайте изгледа на приложението с тъмна тема, която е по-удобна за очите при
+                                    използване през нощта или в слабо осветени помещения.
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     <button
-                        class="flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-3.5 py-2.5 transition-all duration-300 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 focus:ring-offset-white dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-700 dark:focus:ring-offset-zinc-900"
+                        class="mx-auto flex items-center justify-center gap-3 rounded-lg bg-indigo-600 px-5 py-3 text-lg transition-all duration-300 hover:bg-indigo-700 focus:bg-indigo-700 focus:outline-none dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700"
                         type="button"
                         @click.prevent="authStore.login"
                     >
-                        <span class="text-base font-semibold leading-none text-white">Започнете сега</span>
-                        <ArrowRightIcon class="h-4 w-4 text-white" />
+                        <span class="text-lg font-semibold leading-none text-white">Започнете сега</span>
+                        <ArrowRightIcon class="h-5 w-5 text-white" />
                     </button>
                 </div>
             </div>
@@ -69,7 +130,15 @@
 </template>
 
 <script setup>
-    import { ArrowRightIcon, CircleCheckIcon, WalletCardsIcon } from 'lucide-vue-next'
+    import {
+        ArrowRightIcon,
+        CircleCheckIcon,
+        ListIcon,
+        MoonIcon,
+        ReceiptIcon,
+        Trash2Icon,
+        WalletCardsIcon,
+    } from 'lucide-vue-next'
 
     import { useAuthStore } from '@/stores/auth'
 
