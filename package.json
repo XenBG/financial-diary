@@ -15,10 +15,13 @@
     "lint:prettier:fix": "prettier --write \"**/*.{js,vue}\""
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.23",
     "@vercel/analytics": "^1.5.0",
     "@vueuse/core": "^13.0.0",
     "lucide-vue-next": "^0.487.0",
-    "vue": "^3.3.4"
+    "pinia": "^3.0.2",
+    "vue": "^3.3.4",
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.10.4",

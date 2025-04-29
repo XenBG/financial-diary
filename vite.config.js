@@ -11,7 +11,11 @@ export default defineConfig({
     preview: {
         port: 3000,
     },
-    root: path.join(__dirname, 'src'),
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './src'),
+        },
+    },
     plugins: [
         vue({
             template: {

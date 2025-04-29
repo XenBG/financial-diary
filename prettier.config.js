@@ -29,8 +29,12 @@ export default {
     htmlWhitespaceSensitivity: 'ignore',
     importOrder: [
         '<THIRD_PARTY_MODULES>',
+        '^@/(.*)$',
         '^(.*)/assets/(.*)$',
         '^(.*)/components/(.*)$',
+        '^(.*)/services/(.*)$',
+        '^(.*)/stores/(.*)$',
+        '^(.*)/config/(.*)$',
         '^(.*)/composables/(.*)$',
         '^(.*)/utils/(.*)$',
         '^(.*)/views/(.*)$',

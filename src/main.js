@@ -1,10 +1,21 @@
+import App from '@/App.vue'
+import router from '@/router'
+import pinia from '@/stores'
 import { inject } from '@vercel/analytics'
 import { createApp } from 'vue'
 
-import './assets/css/index.css'
+import '@/assets/css/index.css'
 
-import App from './App.vue'
+import { useDiaryStore } from '@/stores/diary'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+
+app.use(pinia)
+app.use(router)
+
+// Load initial data
+const diaryStore = useDiaryStore()
+diaryStore.loadData()
 
 inject()
+app.mount('#app')
