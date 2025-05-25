@@ -7,6 +7,7 @@
 
         <SidebarContainer>
             <Summary />
+            <DailySpendingLimit />
             <TransactionsList />
         </SidebarContainer>
 
@@ -24,6 +25,7 @@
     import BasicExpenses from '@/components/Main/Section/BasicExpenses.vue'
     import OtherExpenses from '@/components/Main/Section/OtherExpenses.vue'
     import Modals from '@/components/Modals.vue'
+    import DailySpendingLimit from '@/components/Sidebar/Section/DailySpendingLimit.vue'
     import Summary from '@/components/Sidebar/Section/Summary.vue'
     import TransactionsList from '@/components/Sidebar/Section/TransactionsList.vue'
     import SidebarContainer from '@/components/Sidebar/SidebarContainer.vue'

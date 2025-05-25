@@ -18,7 +18,6 @@
     import { onMounted } from 'vue'
 
     import HeaderContainer from '@/components/Header/HeaderContainer.vue'
-
     import { useDiaryStore } from '@/stores/diary'
 
     const diaryStore = useDiaryStore()

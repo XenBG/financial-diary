@@ -106,7 +106,10 @@
                             </div>
 
                             <!-- Add New Transaction Form -->
-                            <div class="rounded-md border border-slate-200 bg-slate-50 p-4 dark:border-zinc-700 dark:bg-zinc-900">
+                            <form
+                                class="rounded-md border border-slate-200 bg-slate-50 p-4 dark:border-zinc-700 dark:bg-zinc-900"
+                                @submit.prevent="addTransaction"
+                            >
                                 <h4 class="mb-3 font-medium text-slate-900 dark:text-zinc-100">Добавяне на нова трансакция</h4>
                                 <div class="mb-3">
                                     <label
@@ -156,11 +159,11 @@
                                 </div>
                                 <button
                                     class="mt-2 w-full rounded-md bg-blue-600 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-700 focus:outline-none dark:bg-blue-700 dark:hover:bg-blue-800"
-                                    @click="addTransaction"
+                                    type="submit"
                                 >
                                     Добави трансакция
                                 </button>
-                            </div>
+                            </form>
 
                             <div class="mt-4 flex justify-end">
                                 <button

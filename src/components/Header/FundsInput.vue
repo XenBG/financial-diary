@@ -26,16 +26,14 @@
 </template>
 
 <script setup>
-    import { useDiaryStore } from '@/stores/diary'
-
     import { CURRENCY } from '@/config/constants'
+    import { useDiaryStore } from '@/stores/diary'
 
     // Stores
     const diaryStore = useDiaryStore()
 
     // Methods
     const saveFunds = () => {
-        const fundsValue = diaryStore.safeParseFloat(diaryStore.funds)
-        diaryStore.setFunds(fundsValue)
+        diaryStore.saveFunds()
     }
 </script>
