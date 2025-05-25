@@ -34,14 +34,16 @@ export const useSalaryStore = defineStore('salary', () => {
         const salary = new Date(getNextSalaryDate.value)
         const diffTime = salary - today
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
         return Math.max(0, diffDays)
     })
 
     const getRemainingFunds = computed(() => {
-        // Calculate remaining funds from both expense categories
-        const basicExpensesRemaining = diaryStore.getBasicExpensesTotal - diaryStore.getBasicExpensesSpent
-        const otherExpensesRemaining = diaryStore.getOtherExpensesTotal - diaryStore.getOtherExpensesSpent
-        return basicExpensesRemaining + otherExpensesRemaining
+        const totalFunds = computed(() => diaryStore.funds)
+        const totalAllocated = computed(() => diaryStore.getTotalAllocated)
+        const totalSpent = computed(() => diaryStore.getTotalSpent)
+
+        return totalFunds.value - totalAllocated.value + (totalAllocated.value - totalSpent.value)
     })
 
     const getDailySpendingLimit = computed(() => {
@@ -49,7 +51,7 @@ export const useSalaryStore = defineStore('salary', () => {
         if (daysUntilSalary <= 0) return 0
 
         const remainingFunds = getRemainingFunds.value
-        return Math.floor(remainingFunds / daysUntilSalary)
+        return Number((remainingFunds / daysUntilSalary).toFixed(2))
     })
 
     return {
